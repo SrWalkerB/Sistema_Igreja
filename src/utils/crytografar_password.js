@@ -1,6 +1,8 @@
 
 const bcrypt = require("bcrypt");
 
+
+
 async function Cryptografar_Password(password){
 
     const salt_Round = parseInt(process.env.SALT);
@@ -9,4 +11,14 @@ async function Cryptografar_Password(password){
 }
 
 
-module.exports = { Cryptografar_Password }
+async function Verificar_Password(password, hash){
+
+    return bcrypt.compare(password, hash);
+}
+
+
+module.exports = { 
+
+    Cryptografar_Password, 
+    Verificar_Password 
+}

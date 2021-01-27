@@ -7,8 +7,10 @@ module.exports = {
 
         try {
             
-            const congregacoes = await Knex_Database("tb_congregacoes");
-
+            const congregacoes = await Knex_Database("tb_congregacoes")
+            .join("tb_caixa")
+            .join("tb_membros")
+            
             if(congregacoes <= 0){
 
                 return Response.status(200).json({ msg: "Nenhuma Congregação cadastrada" })
