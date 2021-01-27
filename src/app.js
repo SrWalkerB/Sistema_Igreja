@@ -1,4 +1,6 @@
 
+require("dotenv").config();
+
 const express = require("express");
 const adm_router = require("./routes/adm_router");
 const login_router = require("./routes/login_router");
