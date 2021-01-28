@@ -10,5 +10,7 @@ adm_router.get("/congregacoes", Autorizacao, Administracao_Controllers.list_cong
 
 adm_router.post("/congregacoes/create", Autorizacao, Administracao_Controllers.create_congregacoes);
 
+adm_router.post("/congregacoes/create/user", Autorizacao, Administracao_Controllers.create_user);
+
 
 module.exports = adm_router;
