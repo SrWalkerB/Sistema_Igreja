@@ -5,12 +5,13 @@ exports.up = function(knex) {
     
     return Knex_Database.schema.createTableIfNotExists("tb_membros", table => {
 
+        table.integer("id_congregacao").notNullable();
         table.increments("id_membros");
 
-        table.string("name", 25).notNullable();
-        table.string("surname", 50).notNullable();
+        table.string("name", 25);
+        table.string("surname", 50);
 
-        table.integer('age').notNullable();
+        table.integer('age');
 
         table.string("cargo", 20);
     })

@@ -8,5 +8,7 @@ const adm_router = express.Router();
 
 adm_router.get("/congregacoes", Autorizacao, Administracao_Controllers.list_congregacoes);
 
+adm_router.post("/congregacoes/create", Autorizacao, Administracao_Controllers.create_congregacoes);
+
 
 module.exports = adm_router;

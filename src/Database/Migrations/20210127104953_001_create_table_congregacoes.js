@@ -7,7 +7,7 @@ exports.up = function(knex) {
 
         table.increments("id_congregacao").notNullable();
 
-        table.string("name").notNullable();
+        table.string("name")
 
         table.integer("id_caixa");
         table.integer("id_membros");
