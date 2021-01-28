@@ -1,5 +1,6 @@
 const Knex_Database = require("../Database/Config/Knex_Config");
 const { Cryptografar_Password, Verificar_Password } = require("../utils/crytografar_password");
+const { GerarTokens } = require("../utils/gerarTokens");
 const { Verificar_Email } = require("../utils/verificao_email_DB");
 
 
@@ -11,19 +12,40 @@ module.exports = {
 
             const { email_user, password_user } = Request.body;
 
+            //Verificando email
             const seacher = Verificar_Email(email_user);
+
 
             if(seacher == false){
 
                 return Response.status(200).json({ msg: "Conta não encontrada" })
             }
 
-            const password_db = await Knex_Database("tb_users").where("email", email_user)[0];
+            //Pegando os dados da conta no DB 
+            const get_dados = await Knex_Database("tb_users").where("email", email_user);
+            const password_db = get_dados[0].password;
+
+
+            //Verificando a senha
+
+            const result = await Verificar_Password(password_user, password_db);
+
+
+            if(result == false){
+
+                return Response.status(200).json({ msg: "Conta não encontrada" })
+            }
+
+            //Retornando o resultado
+
+            const id_user = get_dados[0].id_user;
+
+            const token = GerarTokens(id_user, email_user);
+
+
             
-            const result = Verificar_Password(password_user, password_db);
-
-
-            return Response.status(200).json({ msg: result })
+            Response.header("Token", token);
+            return Response.status(200).json({ msg: "Conta Encontrada" })
 
             
         } catch (error) {
