@@ -39,11 +39,13 @@ module.exports = {
             //Retornando o resultado
 
             const id_user = get_dados[0].id_user;
-
-            const token = GerarTokens(id_user, email_user);
-
-
+            const cargo = get_dados[0].type;
             
+            
+
+            const token = GerarTokens(id_user, email_user, cargo);
+
+
             Response.header("Token", token);
             return Response.status(200).json({ msg: "Conta Encontrada" })
 

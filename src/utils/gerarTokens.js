@@ -2,12 +2,11 @@
 const jwt = require("jsonwebtoken");
 
 
-function GerarTokens(id, email) {
+function GerarTokens(id, email, cargo) {
 
 
-    return jwt.sign({ id: id, email: email}, process.env.KEY, { expiresIn: "30m" })
+    return jwt.sign({ id: id, email: email, cargo: cargo}, process.env.KEY, { expiresIn: "30m" })
 }
-
 
 
 
@@ -20,8 +19,9 @@ function VerificarToken(token){
             return 'Token Invalido';
         }
 
+        return decoded;
     }); 
-    
+
 
     return result;
 }

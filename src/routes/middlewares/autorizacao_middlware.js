@@ -13,6 +13,7 @@ function Autorizacao(request, response, next){
         return response.status(401).send({ msg: result });    
     }
 
+
     next();
     
 }
