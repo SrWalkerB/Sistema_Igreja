@@ -1,4 +1,6 @@
-const Knex_Database = require("../Database/Config/Knex_Config");
+const congregacao_Data = require("../Data/congregacao_Data");
+const user_Data = require("../Data/user_Data");
+const Knex_Database = require("../Database/Infra/Knex_Config");
 const { Cryptografar_Password } = require("../utils/crytografar_password");
 const { VerificarToken } = require("../utils/gerarTokens");
 const { Verificando_Permissao } = require("../utils/verificando_Permisao");
@@ -26,7 +28,7 @@ module.exports = {
 
 
             //Retornando dados
-            const congregacoes = await Knex_Database("tb_congregacoes")
+            const congregacoes = await congregacao_Data.list_congregacoes_all();
             
             
             if(congregacoes <= 0){
@@ -48,11 +50,15 @@ module.exports = {
 
         try {
 
+            //Pegando os dados
+
             const { name } = Request.body;
+        
 
             //Verificando se já existe cadastro
             
-            const seacher = await Knex_Database("tb_congregacoes").where("name", name);
+            const seacher = await congregacao_Data.list_congregacao(name);
+
 
             if(seacher != ""){
 
@@ -62,35 +68,18 @@ module.exports = {
 
             //Criando as tabelas e as ligações
 
-            const create_congregacao = await Knex_Database("tb_congregacoes").insert({
-
-                name: name
-            })
+            const create_congregacao = await congregacao_Data.create_congregacao(name);
             
-
-
-            const insert_dados_padrao = await Knex_Database("tb_congregacoes")
-            .where("name", name)
-            .update({
-
-                id_caixa: create_congregacao,
-                id_membros: create_congregacao,
-                id_info_congregacao: create_congregacao
-            })
-
             
+            if(create_congregacao.err){
 
-            //Verificando Se ocorreu um erro
-
-            if( (create_congregacao || insert_dados_padrao) <= 0){
-
-                return Response.status(201).json({ msg: "Ocorreu um erro, tente mais tarde" });
+                return Response.status(500).json(create_congregacao.err);
             }
 
 
             //Finalizando o cadastro
 
-            return Response.status(201).json({ msg: "Create" });
+            return Response.status(201).json({ msg: "Congregacao Criada" });
 
         } catch (error) {
             
@@ -110,6 +99,7 @@ module.exports = {
 
             const verifica_mail = await Verificar_Email(email);
 
+
             if(verifica_mail == true){
 
                 return Response.status(200).json({ msg: "Email já cadastrado" });
@@ -117,7 +107,8 @@ module.exports = {
 
             //Verificando Congregacao
 
-            const verifica_congregacao = await Knex_Database("tb_congregacoes").where("name", congregacao);
+            const verifica_congregacao = await congregacao_Data.list_congregacao(congregacao);
+
 
             if(verifica_congregacao == ""){
 
@@ -128,25 +119,17 @@ module.exports = {
 
             const password_tratado = await Cryptografar_Password(password);
 
+
             //ADD DB
 
             const id_congregacao = verifica_congregacao[0].id_congregacao;
-
-            const create_user_DB = await Knex_Database("tb_users").insert({
-
-                name: name,
-                surname: surname,
-                email: email,
-                password: password_tratado,
-                type: type,
-                id_congregacao: id_congregacao
-
-            }) 
+            
+            const create_user_DB = await user_Data.create_user(name, surname, email, password_tratado, type, id_congregacao);
 
 
-            if(create_user_DB <= 0){
+            if(create_user_DB.err ){
 
-                return Response.status(200).json({ msg: "Ocorreu um erro, tente mais tarde" });
+                return Response.status(200).json( create_user_DB.err );
             }
             
 
@@ -163,7 +146,7 @@ module.exports = {
 
         try {
             
-            const result = await Knex_Database("tb_users");
+            const result = await congregacao_Data.list_user_congregacao();
         
 
             return Response.status(200).json(result);

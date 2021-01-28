@@ -1,4 +1,4 @@
-const Knex_Database = require("../Database/Config/Knex_Config");
+const Knex_Database = require("../Database/Infra/Knex_Config");
 const { Cryptografar_Password, Verificar_Password } = require("../utils/crytografar_password");
 const { GerarTokens } = require("../utils/gerarTokens");
 const { Verificar_Email } = require("../utils/verificao_email_DB");

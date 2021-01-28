@@ -1,4 +1,4 @@
-const Knex_Database = require("../Database/Config/Knex_Config");
+const Knex_Database = require("../Database/Infra/Knex_Config");
 
 
 async function Verificar_Email(email){
