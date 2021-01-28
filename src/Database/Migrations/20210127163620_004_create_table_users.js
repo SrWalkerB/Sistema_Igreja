@@ -20,5 +20,5 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   
-    return Knex_Database.schema.createTableIfNotExists('tb_users');
+    return Knex_Database.schema.dropTableIfExists('tb_users');
 };

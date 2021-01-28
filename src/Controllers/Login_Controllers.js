@@ -47,7 +47,7 @@ module.exports = {
 
 
             Response.header("Token", token);
-            return Response.status(200).json({ msg: "Conta Encontrada" })
+            return Response.status(200).json({ msg: "Login realizado com Sucesso" })
 
             
         } catch (error) {
