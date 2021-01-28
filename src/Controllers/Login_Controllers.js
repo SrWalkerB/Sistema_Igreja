@@ -1,3 +1,4 @@
+const user_Data = require("../Data/user_Data");
 const Knex_Database = require("../Database/Infra/Knex_Config");
 const { Cryptografar_Password, Verificar_Password } = require("../utils/crytografar_password");
 const { GerarTokens } = require("../utils/gerarTokens");
@@ -22,7 +23,7 @@ module.exports = {
             }
 
             //Pegando os dados da conta no DB 
-            const get_dados = await Knex_Database("tb_users").where("email", email_user);
+            const get_dados = await user_Data.seacher_user(email_user);
             const password_db = get_dados[0].password;
 
 
@@ -42,9 +43,12 @@ module.exports = {
             const cargo = get_dados[0].type;
             
             
+            //Criando Token de Acesso
 
             const token = GerarTokens(id_user, email_user, cargo);
 
+
+            //Enviando Resposta e Token
 
             Response.header("Token", token);
             return Response.status(200).json({ msg: "Login realizado com Sucesso" })
@@ -61,7 +65,7 @@ module.exports = {
 
         try {
             
-            const { name, surname, email, password, type, id_congregacao } = Request.body;
+            const { name, surname, email, password } = Request.body;
 
 
             const seacher = await Verificar_Email(email);
@@ -74,23 +78,12 @@ module.exports = {
 
             const password_tratado = await Cryptografar_Password(password);
 
-            const create_user = await Knex_Database("tb_users").insert({
+            const create_user = await user_Data.create_user(name, surname, email, password_tratado, "ADM", 0)
 
-                name: name,
-                surname: surname,
-                email: email,
-                password: password_tratado,
-                type: type,
-                id_congregacao: id_congregacao
 
-            }).then(resp => {
+            if(create_user.err){
 
-                return resp;
-            })
-
-            if(create_user <= 0){
-
-                return Response.status(500).json({ msg: "Ocorreu um erro na criação da conta, tente mais tarde" });
+                return Response.status(500).json( create_user.err );
             } 
  
 

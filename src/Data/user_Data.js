@@ -4,6 +4,11 @@ const Knex_Database = require("../Database/Infra/Knex_Config");
 
 module.exports = {
 
+    seacher_user: async (email) => {
+
+        return await Knex_Database("tb_users").where("email", email);
+    },
+
     create_user: async (name, surname, email, password_tratado, type, id_congregacao) => {
 
         const create_user_DB = await Knex_Database("tb_users").insert({
