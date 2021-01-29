@@ -11,6 +11,8 @@ user_route.get("/congregacao", Autorizacao, User_Controllers.list_congregacao);
 
 user_route.get("/congregacao/membros/", Autorizacao, User_Controllers.list_membros_congregacao);
 
+user_route.post("/congregacao/membros/", Autorizacao, User_Controllers.create_membro_congregacao);
+
 
 
 module.exports = user_route;

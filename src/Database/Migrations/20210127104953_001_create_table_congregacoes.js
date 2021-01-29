@@ -1,4 +1,4 @@
-const Knex_Database = require("../Config/Knex_Config");
+const Knex_Database = require("../Infra/Knex_Config");
 
 
 exports.up = function(knex) {

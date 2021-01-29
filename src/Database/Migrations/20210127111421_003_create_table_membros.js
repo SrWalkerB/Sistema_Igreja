@@ -1,4 +1,4 @@
-const Knex_Database = require("../Config/Knex_Config");
+const Knex_Database = require("../Infra/Knex_Config");
 
 
 exports.up = function(knex) {
@@ -8,12 +8,12 @@ exports.up = function(knex) {
         table.integer("id_congregacao").notNullable();
         table.increments("id_membros");
 
-        table.string("name", 25);
-        table.string("surname", 50);
+        table.string("name", 25).notNullable();
+        table.string("surname", 50).notNullable();
 
-        table.integer('age');
+        table.integer('age').notNullable();
 
-        table.string("cargo", 20);
+        table.string("cargo", 20).notNullable();
     })
 };
 
