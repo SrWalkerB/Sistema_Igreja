@@ -8,9 +8,9 @@ function Autorizacao(request, response, next){
     const result = VerificarToken(token);
     
 
-    if(result == "Token Invalido"){
+    if(result.err){
 
-        return response.status(401).send({ msg: result });    
+        return response.status(401).send({ err: result.err });    
     }
 
     next();

@@ -29,6 +29,11 @@ module.exports = {
 
         return create_user_DB;
 
+    },
+
+    list_users: async () => {
+
+        return await Knex_Database("tb_users")
     }
 }
 

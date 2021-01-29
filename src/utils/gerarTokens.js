@@ -2,10 +2,10 @@
 const jwt = require("jsonwebtoken");
 
 
-function GerarTokens(id, email, cargo) {
+function GerarTokens(id, email, cargo, id_congregacao) {
 
 
-    return jwt.sign({ id: id, email: email, cargo: cargo}, process.env.KEY, { expiresIn: "30m" })
+    return jwt.sign({ id: id, email: email, cargo: cargo, id_congregacao: id_congregacao}, process.env.KEY, { expiresIn: "30m" })
 }
 
 
@@ -16,7 +16,7 @@ function VerificarToken(token){
 
         if(err){
 
-            return 'Token Invalido';
+            return { err : 'Token Invalido' };
         }
 
         return decoded;

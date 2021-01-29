@@ -41,11 +41,12 @@ module.exports = {
 
             const id_user = get_dados[0].id_user;
             const cargo = get_dados[0].type;
+            const id_congregacao = get_dados[0].id_congregacao;
             
             
             //Criando Token de Acesso
 
-            const token = GerarTokens(id_user, email_user, cargo);
+            const token = GerarTokens(id_user, email_user, cargo, id_congregacao);
 
 
             //Enviando Resposta e Token

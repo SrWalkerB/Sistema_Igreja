@@ -9,14 +9,14 @@ module.exports = {
         return await Knex_Database("tb_congregacoes");
     },
 
-    list_user_congregacao: async () => {
-
-        return await Knex_Database("tb_users")
-    },
-
-    list_congregacao: async (name) => {
+    list_congregacao_NAME: async (name) => {
 
         return await Knex_Database("tb_congregacoes").where("name", name);
+    },
+
+    list_congregacao_ID: async (id) => {
+
+        return Knex_Database("tb_congregacoes").where("id_congregacao", id);
     },
 
     create_congregacao: async (name) => {

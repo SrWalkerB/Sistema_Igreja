@@ -1,10 +1,10 @@
 const congregacao_Data = require("../Data/congregacao_Data");
 const user_Data = require("../Data/user_Data");
-const Knex_Database = require("../Database/Infra/Knex_Config");
 const { Cryptografar_Password } = require("../utils/crytografar_password");
 const { VerificarToken } = require("../utils/gerarTokens");
 const { Verificando_Permissao } = require("../utils/verificando_Permisao");
 const { Verificar_Email } = require("../utils/verificao_email_DB");
+const User_Controllers = require("./User_Controllers");
 
 
 
@@ -23,7 +23,8 @@ module.exports = {
 
             if(verificando_Permissao.err){
 
-                return Response.status(200).json(verificando_Permissao);
+
+                return Response.status(401).json({ err: verificando_Permissao.err });
             }
 
 
@@ -50,6 +51,19 @@ module.exports = {
 
         try {
 
+             //Verificando Permissoes
+
+             const token = Request.header("Token");
+             const decode = VerificarToken(token);
+             const verificando_Permissao = Verificando_Permissao(decode);
+ 
+ 
+             if(verificando_Permissao.err) {
+ 
+                 return Response.status(401).json({ err : verificando_Permissao.err});
+             }
+
+
             //Pegando os dados
 
             const { name } = Request.body;
@@ -57,7 +71,7 @@ module.exports = {
 
             //Verificando se já existe cadastro
             
-            const seacher = await congregacao_Data.list_congregacao(name);
+            const seacher = await congregacao_Data.list_congregacao_NAME(name);
 
 
             if(seacher != ""){
@@ -91,7 +105,20 @@ module.exports = {
     create_user: async (Request, Response) => {
 
         try {
+
+            //Verificando Permissoes
+
+            const token = Request.header("Token");
+            const decode = VerificarToken(token);
+            const verificando_Permissao = Verificando_Permissao(decode);
+
+
+            if(verificando_Permissao.err) {
+
+                return Response.status(401).json({ err : verificando_Permissao.err});
+            }
             
+
             const { name, surname, email, password, type, congregacao } = Request.body;
 
 
@@ -107,7 +134,7 @@ module.exports = {
 
             //Verificando Congregacao
 
-            const verifica_congregacao = await congregacao_Data.list_congregacao(congregacao);
+            const verifica_congregacao = await congregacao_Data.list_congregacao_NAME(congregacao);
 
 
             if(verifica_congregacao == ""){
@@ -123,7 +150,7 @@ module.exports = {
             //ADD DB
 
             const id_congregacao = verifica_congregacao[0].id_congregacao;
-            
+
             const create_user_DB = await user_Data.create_user(name, surname, email, password_tratado, type, id_congregacao);
 
 
@@ -146,7 +173,21 @@ module.exports = {
 
         try {
             
-            const result = await congregacao_Data.list_user_congregacao();
+            const token = Request.header("Token");
+            const decode = VerificarToken(token);
+            const verificando_Permissao = Verificando_Permissao(decode);
+
+
+            if(verificando_Permissao.err) {
+
+
+                return Response.status(401).json({ err : verificando_Permissao.err});
+            }
+
+
+            //Retornando dos dados
+
+            const result = await user_Data.list_users();
         
 
             return Response.status(200).json(result);
