@@ -52,7 +52,7 @@ module.exports = {
 
 
             const seacher_membros = await membros_Data.list_membros_Congregacao(verficar_token.id_congregacao);
-            
+
 
             if(seacher_membros == ""){
              
@@ -111,6 +111,60 @@ module.exports = {
             
             console.log(error);
             return Response.status(500).json({ err: error });
+        }
+    },
+
+    delete_membro_congregacao: async (Request, Response) => {
+
+        try {
+            
+            //Verificando Token 
+
+            const token = Request.header("Token");
+            const verficar_token = VerificarToken(token);
+
+
+            if(verficar_token.err){
+
+                return Response.status(401).json({ err: verficar_token.err })
+
+            }
+
+            //Pegando ID
+
+            const { id } = Request.params;
+
+            //Deletando no DB
+
+            const delete_membro = await membros_Data.delete_membro_congregacao(verficar_token.id_congregacao, id);
+
+
+            console.log("ID_Congregacao", verficar_token.id_congregacao);
+            console.log(delete_membro);
+
+
+
+
+
+
+
+
+
+            //Fazendo uma verificao
+
+            if(delete_membro <= 0){
+
+                return Response.status(401).json({ err : "ID membro não encontrado" });
+            }
+
+            //Retornando Status
+
+            return Response.status(401).json({ msg : "Membro deletado!" })
+
+        } catch (error) {
+            
+            console.log(error);
+            return Response.status(500).json({ err : error });
         }
     }
 }

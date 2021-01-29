@@ -31,5 +31,14 @@ module.exports = {
 
 
         return create_membro;
+    },
+
+    delete_membro_congregacao: async (id_congregacao, id_membro) => {
+
+        return await Knex_Database("tb_membros")
+        .where("id_congregacao", id_congregacao)
+        .where("id_membros", id_membro)
+        .delete();
+        
     }
 }

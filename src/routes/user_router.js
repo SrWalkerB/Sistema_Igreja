@@ -13,6 +13,8 @@ user_route.get("/congregacao/membros/", Autorizacao, User_Controllers.list_membr
 
 user_route.post("/congregacao/membros/", Autorizacao, User_Controllers.create_membro_congregacao);
 
+user_route.delete("/congregacao/membros/:id", Autorizacao, User_Controllers.delete_membro_congregacao);
+
 
 
 module.exports = user_route;
