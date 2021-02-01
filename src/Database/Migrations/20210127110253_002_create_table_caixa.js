@@ -11,9 +11,6 @@ exports.up = function(knex) {
         table.decimal("doacoes");
         table.decimal("ofertas");
 
-        table.integer("id_contas_a_pagar");
-        table.integer("id_contas_pagas");
-
         table.timestamp("data").defaultTo(Knex_Database.fn.now());
     })
 };
