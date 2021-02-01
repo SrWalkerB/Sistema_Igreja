@@ -6,5 +6,16 @@ module.exports = {
     list_caixa: async (id_congregacao) => {
 
         return Knex_Database("tb_caixa").where("id_congregacao", id_congregacao);
+    },
+
+    create_Lancamento_Caixa: async (id_congregacao, dizimo, oferta, doacoes) => {
+
+        return Knex_Database("tb_caixa").insert({
+
+            id_congregacao: id_congregacao,
+            dizimos: dizimo,
+            ofertas: oferta,
+            doacoes: doacoes
+        })
     }
 }

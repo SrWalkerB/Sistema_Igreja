@@ -9,6 +9,8 @@ const caixa_Route = express.Router();
 
 caixa_Route.get("/congregacao/caixa", Autorizacao, Caixa_Controllers.list_Caixa);
 
+caixa_Route.post("/congregacao/caixa", Autorizacao, Caixa_Controllers.lancamento_Caixa);
+
 
 
 
