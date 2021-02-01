@@ -14,5 +14,7 @@ adm_router.post("/congregacoes/create/user", Autorizacao, Administracao_Controll
 
 adm_router.get("/congregacoes/users/", Autorizacao, Administracao_Controllers.list_user);
 
+adm_router.delete("/congregacoes/del/:id_congregacao", Autorizacao, Administracao_Controllers.delete_Congregacao);
+
 
 module.exports = adm_router;

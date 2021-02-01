@@ -54,5 +54,22 @@ module.exports = {
 
 
         return result_ID;
+    },
+
+    delete_Congregacao: async (id_congregacao) => {
+
+        const del_congregacao = await Knex_Database('tb_congregacoes').where("id_congregacao", id_congregacao).delete();
+        const del_caixa = await Knex_Database("tb_caixa").where("id_congregacao", id_congregacao).delete();
+        const del_info_Congregacao = await Knex_Database("tb_info_congregacoes").where("id_congregacao", id_congregacao).delete();
+        const del_membros = await Knex_Database("tb_membros").where("id_congregacao", id_congregacao).delete();
+        const del_users = await Knex_Database("tb_users").where("id_congregacao", id_congregacao).delete();
+
+
+        if( (del_congregacao, del_caixa, del_info_Congregacao, del_membros, del_users) <= 0 ){
+
+            return { err: "Ocorreu um erro, Tente mais tarde" }
+        }
+
+        return { msg: "Congregacao Deletada!" }
     }
 }

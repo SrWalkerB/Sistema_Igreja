@@ -188,5 +188,40 @@ module.exports = {
             console.log(error);
             return Response.status(500).json({ msg: error });
         }
+    },
+
+    delete_Congregacao: async (Request, Response) => {
+
+        try {
+            
+            const token = Request.header("Token");
+            const verifica_Token = VerificarToken(token);
+
+
+
+            const { id_congregacao } = Request.params;
+
+            const verifica_ID_Congregacao = await congregacao_Data.list_congregacao_ID(id_congregacao);
+
+
+
+            if(verifica_ID_Congregacao <= 0){
+
+                return Response.status(200).json({ msg: "Congregacao Não encontrada" });
+                
+            }
+
+            const del = await congregacao_Data.delete_Congregacao(id_congregacao);
+
+
+            return Response.status(200).json({ msg: "Deletado!" });
+
+
+        } catch (error) {
+            
+
+            console.log(error);
+            return Response.status(500).json({ err: error });
+        }
     }
 }
