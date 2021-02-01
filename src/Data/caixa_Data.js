@@ -17,5 +17,12 @@ module.exports = {
             ofertas: oferta,
             doacoes: doacoes
         })
+    },
+
+    delete_Lançamento_Caixa: async (id_congregacao, id_lancamento) => {
+
+        return Knex_Database("tb_caixa")
+        .where("id_congregacao", id_congregacao)
+        .where("id_lancamento", id_lancamento).delete();
     }
 }

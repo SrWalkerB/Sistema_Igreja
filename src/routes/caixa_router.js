@@ -11,6 +11,8 @@ caixa_Route.get("/congregacao/caixa", Autorizacao, Caixa_Controllers.list_Caixa)
 
 caixa_Route.post("/congregacao/caixa", Autorizacao, Caixa_Controllers.lancamento_Caixa);
 
+caixa_Route.delete("/congregacao/caixa/del/:id_lancamento", Autorizacao, Caixa_Controllers.delete_Lancamento_Caixa);
+
 
 
 

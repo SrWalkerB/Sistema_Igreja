@@ -6,6 +6,7 @@ exports.up = function(knex) {
     return Knex_Database.schema.createTableIfNotExists("tb_caixa", table => {
 
         table.integer("id_congregacao").notNullable();
+        table.increments("id_lancamento").notNullable();
 
         table.decimal("dizimos");
         table.decimal("doacoes");

@@ -1,4 +1,4 @@
-const { request } = require("express");
+const { request, response } = require("express");
 const moment = require("moment");
 const caixa_Data = require("../Data/caixa_Data");
 const { VerificarToken } = require("../utils/gerarTokens");
@@ -27,7 +27,8 @@ module.exports = {
                 const data_formtada = moment(result.data).format("LL")
 
                 return data.push({ 
-                    id_congregacao: result.id_congregacao,
+                    id_Lancamento: result.id_lancamento,
+                    id_Congregacao: result.id_congregacao,
                     dizimos: result.dizimos,
                     doacoes: result.doacoes,
                     ofertas: result.ofertas,
@@ -72,6 +73,34 @@ module.exports = {
 
 
             return Response.status(201).json({ msg: "Lançado!" });
+
+        } catch (error) {
+            
+            console.log(error);
+            return Response.status(500).json({ err: error });
+        }
+    },
+
+    delete_Lancamento_Caixa: async (Request, Response) => {
+
+        try {
+            
+            const token = Request.header("Token");
+            const verifica_Token = VerificarToken(token);
+
+            const { id_lancamento } = Request.params;
+            const delete_lancamento = await caixa_Data.delete_Lançamento_Caixa(verifica_Token.id_congregacao, id_lancamento);
+
+            console.log(delete_lancamento);
+
+            if(delete_lancamento <= 0){
+
+                return Response.status(200).json({ msg: "Lançamento não encontrado, tente mais tarde" });
+            }
+
+
+            return Response.status(200).json({ msg: "Lançamento Deletado!" });
+
 
         } catch (error) {
             
