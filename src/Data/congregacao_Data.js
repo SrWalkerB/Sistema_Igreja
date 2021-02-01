@@ -35,7 +35,19 @@ module.exports = {
             id_info_congregacao: result_ID
         })
 
-        if( (result_ID || insert_dados_padrao) <= 0){
+        const insert_address_padrao = await Knex_Database("tb_info_congregacoes").insert({
+    
+            id_congregacao: result_ID,
+            cep: 00000,
+            rua: "",
+            numero: "",
+            bairro: "",
+            cidade: "",
+            estado: "",
+            pais: "Brasil"
+        })
+
+        if( (result_ID || insert_dados_padrao || insert_address_padrao) < -1){
 
             return { err: "Ocorreu um erro, tente mais tarde" }
         }

@@ -5,7 +5,7 @@ const Knex_Database = require("../Infra/Knex_Config");
 
 exports.up = function(knex) {
 
-    return Knex_Database.schema.createTableIfNotExists("tb_info-congregacoes", table => {
+    return Knex_Database.schema.createTableIfNotExists("tb_info_congregacoes", table => {
 
         table.integer("id_congregacao");
 
@@ -21,5 +21,5 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   
-    return Knex_Database.schema.dropTableIfExists("tb_info-congregacoes");
+    return Knex_Database.schema.dropTableIfExists("tb_info_congregacoes");
 };

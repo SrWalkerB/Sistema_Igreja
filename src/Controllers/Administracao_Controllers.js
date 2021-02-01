@@ -56,12 +56,6 @@ module.exports = {
              const token = Request.header("Token");
              const decode = VerificarToken(token);
              const verificando_Permissao = Verificando_Permissao(decode);
- 
- 
-             if(verificando_Permissao.err) {
- 
-                 return Response.status(401).json({ err : verificando_Permissao.err});
-             }
 
 
             //Pegando os dados
@@ -80,20 +74,17 @@ module.exports = {
             }
 
 
+            
             //Criando as tabelas e as ligações
 
             const create_congregacao = await congregacao_Data.create_congregacao(name);
             
             
-            if(create_congregacao.err){
-
-                return Response.status(500).json(create_congregacao.err);
-            }
-
 
             //Finalizando o cadastro
 
             return Response.status(201).json({ msg: "Congregacao Criada" });
+            
 
         } catch (error) {
             
