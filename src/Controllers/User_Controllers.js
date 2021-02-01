@@ -17,6 +17,7 @@ module.exports = {
             const verficar_token = VerificarToken(token);
 
 
+
             if(verficar_token.err){
 
                 return Response.status(401).json({ err: verficar_token.err })
@@ -114,6 +115,50 @@ module.exports = {
         }
     },
 
+    update_membro_congreacao: async (Request, Response) => {
+
+        try {
+            
+            const { id_congregacao, id_membro } = Request.params;
+            const { name, surname, age, cargo } = Request.body;
+
+            const seacher_congregacao = await congregacao_Data.list_congregacao_ID(id_congregacao);
+
+
+            if(seacher_congregacao == ""){
+
+                return Response.status(200).json({ err: "Congregacao não encontrada" });
+            }
+
+            const congregacao_ID = seacher_congregacao[0].id_congregacao;
+            const seacher_membro = await membros_Data.list_membros_ID(congregacao_ID, id_membro)
+
+            if(seacher_membro == ""){
+                
+                return Response.status(200).json({ err: "Membro não encontrada" });
+            }
+            
+            const membro_ID = seacher_membro[0].id_membros;
+
+            const update = await membros_Data.update_Membro_Congregacao(congregacao_ID, membro_ID, name, surname, age, cargo);
+
+
+            if(update <= 0){
+
+                return Response.status(200).json({ err: "Ocorreu um erro, tente mais tarde" });
+            }
+
+            
+            return Response.status(200).json({ msg: "Membro Atualizado!" });
+
+        } catch (error) {
+            
+            console.log(error);
+            return Response.status(500).json(error);
+        }
+
+    },
+
     delete_membro_congregacao: async (Request, Response) => {
 
         try {
@@ -137,17 +182,6 @@ module.exports = {
             //Deletando no DB
 
             const delete_membro = await membros_Data.delete_membro_congregacao(verficar_token.id_congregacao, id);
-
-
-            console.log("ID_Congregacao", verficar_token.id_congregacao);
-            console.log(delete_membro);
-
-
-
-
-
-
-
 
 
             //Fazendo uma verificao

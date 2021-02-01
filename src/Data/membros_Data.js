@@ -11,6 +11,14 @@ module.exports = {
         return Knex_Database("tb_membros").where("id_congregacao", id_congregacao);
     },
 
+    list_membros_ID: async (id_congregacao, id_membro) => {
+
+
+        return Knex_Database("tb_membros")
+        .where("id_congregacao", id_congregacao)
+        .where("id_membros", id_membro);
+    },
+
     create_membros_Congregacao: async (id_congregacao, name, surname, age, cargo) => {
 
 
@@ -31,6 +39,20 @@ module.exports = {
 
 
         return create_membro;
+    },
+
+    update_Membro_Congregacao: async (id_congregacao, id_membro, name, surname, age, cargo) => {
+
+        return Knex_Database("tb_membros")
+        .where("id_congregacao", id_congregacao)
+        .where("id_membros", id_membro)
+        .update({
+
+            name: name,
+            surname: surname,
+            age: age,
+            cargo: cargo
+        })
     },
 
     delete_membro_congregacao: async (id_congregacao, id_membro) => {
