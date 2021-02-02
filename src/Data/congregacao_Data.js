@@ -16,7 +16,11 @@ module.exports = {
 
     list_congregacao_ID: async (id) => {
 
-        return Knex_Database("tb_congregacoes").where("id_congregacao", id);
+        return Knex_Database("tb_congregacoes")
+        .where("tb_congregacoes.id_congregacao", id)
+        .join("tb_info_congregacoes")
+        .where("tb_info_congregacoes.id_congregacao", id)
+        
     },
 
     create_congregacao: async (name) => {
@@ -54,6 +58,23 @@ module.exports = {
 
 
         return result_ID;
+    },
+
+    update_Info_Congregacao: async (id_congregacao, cep, rua, numero, bairro, cidade, estado, pais) => {
+
+
+        return Knex_Database("tb_info_congregacoes")
+        .where("id_congregacao", id_congregacao)
+        .update({
+
+            cep: cep,
+            rua: rua,
+            numero: numero,
+            bairro: bairro,
+            cidade: cidade,
+            estado: estado,
+            pais: pais
+        })
     },
 
     delete_Congregacao: async (id_congregacao) => {

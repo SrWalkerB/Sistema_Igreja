@@ -17,15 +17,16 @@ module.exports = {
             const verficar_token = VerificarToken(token);
 
 
-
-            if(verficar_token.err){
-
-                return Response.status(401).json({ err: verficar_token.err })
-
-            }
+            //Organizando dados
+            let data = []
 
             const seacher_congregacao = await congregacao_Data.list_congregacao_ID(verficar_token.id_congregacao);
             
+
+            seacher_congregacao.map(result => {
+
+                console.log(result)
+            })
 
 
             return Response.status(200).json(seacher_congregacao);
@@ -115,7 +116,7 @@ module.exports = {
         }
     },
 
-    update_membro_congreacao: async (Request, Response) => {
+    update_membro_congregacao: async (Request, Response) => {
 
         try {
 
@@ -161,6 +162,41 @@ module.exports = {
             return Response.status(500).json(error);
         }
 
+    },
+
+    update_Info_Congregacao: async (Request, Response) => {
+
+        try {
+            
+            //Verificando Token
+
+            const token = Request.header("Token");
+            const verifica_Token = VerificarToken(token);
+
+
+            //Pegando as informações
+
+            const id_congregacao = verifica_Token.id_congregacao;
+
+            const { cep, rua, numero, bairro, cidade, estado, pais } = Request.body;
+
+
+            //Update
+
+            const update = await congregacao_Data.update_Info_Congregacao(id_congregacao, cep, rua, numero, bairro, cidade, estado, pais);
+
+            if(update < -1) {
+
+                return Response.status(500).json({ err: "Ocorreu um erro, tente mas tarde" })
+            }
+
+            return Response.status(200).json({ msg: "Alterado!" })
+
+        } catch (error) {
+            
+            console.log(error);
+            return Response.status(500).json({ err: error });
+        }
     },
 
     delete_membro_congregacao: async (Request, Response) => {
