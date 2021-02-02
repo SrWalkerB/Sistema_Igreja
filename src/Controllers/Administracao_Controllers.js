@@ -1,11 +1,11 @@
+const caixa_Data = require("../Data/caixa_Data");
 const congregacao_Data = require("../Data/congregacao_Data");
+const membros_Data = require("../Data/membros_Data");
 const user_Data = require("../Data/user_Data");
 const { Cryptografar_Password } = require("../utils/crytografar_password");
 const { VerificarToken } = require("../utils/gerarTokens");
 const { Verificando_Permissao } = require("../utils/verificando_Permisao");
 const { Verificar_Email } = require("../utils/verificao_email_DB");
-const User_Controllers = require("./User_Controllers");
-
 
 
 module.exports = {
@@ -32,12 +32,20 @@ module.exports = {
             let data = [];
 
 
+
             for(let x = 0; x < congregacoes.length; x++){
 
-                const data_BD = await congregacao_Data.list_congregacao_ID(congregacoes[x].id_congregacao)
+                const data_Congregacoes = await congregacao_Data.list_congregacao_ID(congregacoes[x].id_congregacao)
+                const data_Membros_Congregacoes = await membros_Data.list_membros_Congregacao(congregacoes[x].id_congregacao)
+                const data_Caixa_Congregacoes = await caixa_Data.list_caixa(congregacoes[x].id_congregacao)
 
-                data.push(...data_BD)
-            }
+                data.push({
+                    "congregacao": data_Congregacoes[0], 
+                    "membros": data_Membros_Congregacoes,
+                    "caixa": data_Caixa_Congregacoes
+                })
+                
+            } 
             
 
             if(congregacoes <= 0){
