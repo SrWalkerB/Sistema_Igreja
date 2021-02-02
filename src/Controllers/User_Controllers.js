@@ -17,16 +17,8 @@ module.exports = {
             const verficar_token = VerificarToken(token);
 
 
-            //Organizando dados
-            let data = []
 
             const seacher_congregacao = await congregacao_Data.list_congregacao_ID(verficar_token.id_congregacao);
-            
-
-            seacher_congregacao.map(result => {
-
-                console.log(result)
-            })
 
 
             return Response.status(200).json(seacher_congregacao);
@@ -46,15 +38,8 @@ module.exports = {
             const verficar_token = VerificarToken(token);
 
 
-            if(verficar_token.err){
-
-                return Response.status(401).json({ err: verficar_token.err })
-
-            }
-
 
             const seacher_membros = await membros_Data.list_membros_Congregacao(verficar_token.id_congregacao);
-
 
             if(seacher_membros == ""){
              

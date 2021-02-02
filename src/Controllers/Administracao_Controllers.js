@@ -23,22 +23,30 @@ module.exports = {
 
             if(verificando_Permissao.err){
 
-
                 return Response.status(401).json({ err: verificando_Permissao.err });
             }
 
 
-            //Retornando dados
-            const congregacoes = await congregacao_Data.list_congregacoes_all();
+            //Pegando dados
+            const congregacoes = await congregacao_Data.list_congregacoes_all_ID();
+            let data = [];
+
+
+            for(let x = 0; x < congregacoes.length; x++){
+
+                const data_BD = await congregacao_Data.list_congregacao_ID(congregacoes[x].id_congregacao)
+
+                data.push(...data_BD)
+            }
             
-            
+
             if(congregacoes <= 0){
 
                 return Response.status(200).json({ msg: "Nenhuma Congregação cadastrada" })
             }
 
 
-            return Response.status(200).json(congregacoes)
+            return Response.status(200).json(data)
 
         } catch (error) {
             

@@ -4,9 +4,9 @@ const Knex_Database = require("../Database/Infra/Knex_Config")
 module.exports = {
 
 
-    list_congregacoes_all: async () => {
+    list_congregacoes_all_ID: async () => {
 
-        return await Knex_Database("tb_congregacoes");
+        return await Knex_Database("tb_congregacoes").select("id_congregacao")
     },
 
     list_congregacao_NAME: async (name) => {
