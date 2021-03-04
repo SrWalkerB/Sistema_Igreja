@@ -1,14 +1,44 @@
 # Sistema_Igreja
 
+# Conteudos
+
+   * [Sobre](#Sobre)
+   * [Features](#Features)
+   * [Geatting Started](#Geatting-Started)
+   * [Instalação](#instalacao)
+   * [Como usar](#como-usar)
+   * [Tecnologias](#tecnologias)
+
 ### A ideia é criar um sistema de gerenciamento de igrejas e sua repectivas congregações
 
-## Instalacao
+## Features
+- [x] Cadastro de usuário ADMIN
+- [x] Cadastro das congregações
+- [x] Cadastro de usuários filhos
+- [x] Mini Gerenciamento de Caixa
+- [x] Usuários filhos gerenciam suas próprias congregações criadas do usuário ADMIN
+- [x] Autenticação e autorização 
 
-### npm install para instalar as dependencias
+# Getting started
+### Breve tutorial de como rodar o projeto
 
-### Set as variaveis de ambiente do seu banco de dados
+## Instalando as dependecias 
+```
+npm install
+```
 
-### npm run dev
+## Não esqueça de criar arquivo variaveis de ambiente na raiz do projeto
+
+```
+.env
+```
+
+## Rodando o projeto 
+
+```
+npm run dev
+```
+
 
 ## Como Funciona:
 
