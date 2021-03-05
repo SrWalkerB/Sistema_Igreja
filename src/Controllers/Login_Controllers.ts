@@ -20,7 +20,7 @@ export default {
 
             if(result.err) return Response.status(404).json({ err: result.err });
 
-            return Response.status(200).json({ msg: result.msg})
+            return Response.status(200).json({ token: result.msg})
             
         } catch (error) {
             
@@ -33,29 +33,18 @@ export default {
 
         try {
             
-            /* const { name, surname, email, password } = Request.body;
+            const { name, surname, email, password } = Request.body;
 
+            const result = await loginService.create_Account_Service({
+                name: name,
+                surname: surname,
+                email: email,
+                password: password
+            })
 
-            const seacher = await Verificar_Email(email);
-
-            if(seacher == true){
-
-                return Response.status(200).json({ msg: "Conta já cadastrada" })
-            } 
-
-
-            const password_tratado = await Cryptografar_Password(password);
-
-            const create_user = await user_Data.create_user(name, surname, email, password_tratado, "ADM", 0)
-
-
-            if(create_user.err){
-
-                return Response.status(500).json( create_user.err );
-            }  */
+            if(result.err) return Response.status(400).json({ err: result.err }); 
  
-
-            return Response.status(200).json({ msg: "Conta criada!" });
+            return Response.status(200).json({ msg: result.msg });
 
         } catch (error) {
             

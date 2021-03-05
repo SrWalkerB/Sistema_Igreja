@@ -1,27 +1,21 @@
 import Knex_Database from "../Database/Infra/Knex_Config";
 
+interface ICreateAccountData{
+    name: string,
+    surname: string,
+    email: string,
+    password: string,
+    type: string,
+    id_congregacao: string
+}
+
+
+
 class UserData {
     
-    async create_user(name, surname, email, password_tratado, type, id_congregacao) {
+    async create_user(data: ICreateAccountData) {
 
-        const create_user_DB = await Knex_Database("tb_users").insert({
-
-            name: name,
-            surname: surname,
-            email: email,
-            password: password_tratado,
-            type: type,
-            id_congregacao: id_congregacao
-
-        })
-
-        if(create_user_DB <= 0){
-
-            return { err: "Ocorreu um erro, tente mais tarde" };
-        }
-
-        return create_user_DB;
-
+        return await Knex_Database("tb_users").insert(data);
     }
 
     async list_users(){

@@ -7,7 +7,6 @@ interface IGeneratedToken{
     id_congregacao: number
 }
 
-
 class GeneretedToken{
 
     gerarTokens(data: IGeneratedToken) {
