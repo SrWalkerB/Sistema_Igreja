@@ -107,33 +107,16 @@ export default {
     delete_Congregacao: async (Request: Request, Response: Response) => {
 
         try {
+            const { id } = Request.params;
+
+            const result = await congregacaoService.delete_Congregacao_Service(id);
             
-            const token = Request.header("Token");
-            const verifica_Token = VerificarToken(token);
+            if(result.err) return Response.status(404).json({ err: result.err });
 
-
-
-            const { id_congregacao } = Request.params;
-
-            const verifica_ID_Congregacao = await congregacao_Data.list_congregacao_ID(id_congregacao);
-
-
-
-            if(verifica_ID_Congregacao <= 0){
-
-                return Response.status(200).json({ msg: "Congregacao Não encontrada" });
-                
-            }
-
-            const del = await congregacao_Data.delete_Congregacao(id_congregacao);
-
-
-            return Response.status(200).json({ msg: "Deletado!" });
-
+            return Response.status(200).json({ msg: result.msg });
 
         } catch (error) {
             
-
             console.log(error);
             return Response.status(500).json({ err: error });
         }

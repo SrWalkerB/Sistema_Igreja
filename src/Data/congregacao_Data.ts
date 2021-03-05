@@ -42,10 +42,7 @@ class Congregacao_Data{
     async list_congregacao_ID(id: string){
 
         return Knex_Database("tb_congregacoes")
-        .where("tb_congregacoes.id_congregacao", id)
-        .join("tb_info_congregacoes")
-        .where("tb_info_congregacoes.id_congregacao", id)
-        
+        .where("id_congregacao", id)
     }
 
     async create_congregacao ({ congregacao, info_Congregacao }: ICreate_Congregacao_DTO){
@@ -85,21 +82,26 @@ class Congregacao_Data{
         })
     }
 
-    async delete_Congregacao (id_congregacao){
+    async delete_Congregacao (id_congregacao: string){
 
-        const del_congregacao = await Knex_Database('tb_congregacoes').where("id_congregacao", id_congregacao).delete();
-        const del_caixa = await Knex_Database("tb_caixa").where("id_congregacao", id_congregacao).delete();
-        const del_info_Congregacao = await Knex_Database("tb_info_congregacoes").where("id_congregacao", id_congregacao).delete();
-        const del_membros = await Knex_Database("tb_membros").where("id_congregacao", id_congregacao).delete();
-        const del_users = await Knex_Database("tb_users").where("id_congregacao", id_congregacao).delete();
+        await Knex_Database('tb_congregacoes')
+        .where("id_congregacao", id_congregacao)
+        .delete();
 
+        await Knex_Database("tb_caixa")
+        .where("id_congregacao", id_congregacao)
+        .delete();
 
-        if( (del_congregacao, del_caixa, del_info_Congregacao, del_membros, del_users) <= 0 ){
+        await Knex_Database("tb_info_congregacoes")
+        .where("id_congregacao", id_congregacao)
+        .delete();
+        await Knex_Database("tb_membros")
+        .where("id_congregacao", id_congregacao)
+        .delete();
 
-            return { err: "Ocorreu um erro, Tente mais tarde" }
-        }
-
-        return { msg: "Congregacao Deletada!" }
+        await Knex_Database("tb_users")
+        .where("id_congregacao", id_congregacao)
+        .delete();
     }
 }
 
