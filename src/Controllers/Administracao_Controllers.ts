@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import administracao_Service from "../services/administracao_Service";
 import congregacaoService from "../services/congregacaoService";
 const caixa_Data = require("../Data/caixa_Data");
 const congregacao_Data = require("../Data/congregacao_Data");
@@ -66,61 +67,20 @@ export default {
 
         try {
 
-            //Verificando Permissoes
-
-            const token = Request.header("Token");
-            const decode = VerificarToken(token);
-            const verificando_Permissao = Verificando_Permissao(decode);
-
-
-            if(verificando_Permissao.err) {
-
-                return Response.status(401).json({ err : verificando_Permissao.err});
-            }
-            
-
             const { name, surname, email, password, type, congregacao } = Request.body;
 
+            const result = await administracao_Service.create_User_Service({
+                name_congregacao: congregacao,
+                name: name,
+                surname: surname,
+                email: email,
+                password: password,
+                type: type
+            })
 
-            //Verificando o email
-
-            const verifica_mail = await Verificar_Email(email);
-
-
-            if(verifica_mail == true){
-
-                return Response.status(200).json({ msg: "Email já cadastrado" });
-            }
-
-            //Verificando Congregacao
-
-            const verifica_congregacao = await congregacao_Data.list_congregacao_NAME(congregacao);
-
-
-            if(verifica_congregacao == ""){
-
-                return Response.status(200).json({ msg: "Congregacao não encontrada" });
-            }
-
-            //Criando hash Senha
-
-            const password_tratado = await Cryptografar_Password(password);
-
-
-            //ADD DB
-
-            const id_congregacao = verifica_congregacao[0].id_congregacao;
-
-            const create_user_DB = await user_Data.create_user(name, surname, email, password_tratado, type, id_congregacao);
-
-
-            if(create_user_DB.err ){
-
-                return Response.status(200).json( create_user_DB.err );
-            }
-            
-
-            return Response.status(500).json({ msg: "Usuário criado" });
+            if(result.err) return Response.status(404).json({ err : result.err })
+                        
+            return Response.status(200).json(result.msg);
 
         } catch (error) {
             

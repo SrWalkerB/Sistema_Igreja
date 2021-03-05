@@ -12,7 +12,6 @@ interface ICreate_Info_Congregacao{
     estado: string,
 }
 
-
 class Congregacao_Service{
 
     async list_All_Congregacoes_Service(){
@@ -54,6 +53,11 @@ class Congregacao_Service{
                 pais: "Brasil"
             }
         })  
+    }
+
+    async seacher_Congregacao_name_Service(name: string){
+
+        return await congregacao_Data.seacher_congregacao_NAME(name);
     }
 }
 

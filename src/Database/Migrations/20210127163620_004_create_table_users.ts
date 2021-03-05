@@ -5,7 +5,7 @@ export async function up(): Promise<void> {
  
     return Knex_Database.schema.createTableIfNotExists("tb_users", table => {
 
-        table.increments('id_user').notNullable();
+        table.string('id_user').notNullable();
 
         table.string('name', 25).notNullable();
         table.string('surname', 50).notNullable();
@@ -13,7 +13,7 @@ export async function up(): Promise<void> {
         table.string("password").notNullable();
         table.string("type", 20).notNullable();
         
-        table.integer("id_congregacao");
+        table.string("id_congregacao");
     })
 };
 

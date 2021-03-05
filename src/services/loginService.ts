@@ -57,7 +57,7 @@ class Login_Service {
 
         const password_tratado = await crytografar_password.cryptografar_Password({password: data.password});
 
-        await userService.create_User_Service({
+        await userService.create_User_Service_ADM({
             id_congregacao: "0",
             surname: data.surname,
             name: data.name,

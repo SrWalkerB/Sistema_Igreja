@@ -1,6 +1,7 @@
 import Knex_Database from "../Database/Infra/Knex_Config";
 
 interface ICreateAccountData{
+    id_user: string,
     name: string,
     surname: string,
     email: string,
