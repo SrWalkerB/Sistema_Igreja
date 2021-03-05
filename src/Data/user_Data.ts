@@ -1,15 +1,8 @@
-const Knex_Database = require("../Database/Infra/Knex_Config");
+import Knex_Database from "../Database/Infra/Knex_Config";
 
-
-
-module.exports = {
-
-    seacher_user: async (email) => {
-
-        return await Knex_Database("tb_users").where("email", email);
-    },
-
-    create_user: async (name, surname, email, password_tratado, type, id_congregacao) => {
+class UserData {
+    
+    async create_user(name, surname, email, password_tratado, type, id_congregacao) {
 
         const create_user_DB = await Knex_Database("tb_users").insert({
 
@@ -29,11 +22,19 @@ module.exports = {
 
         return create_user_DB;
 
-    },
+    }
 
-    list_users: async () => {
+    async list_users(){
 
         return await Knex_Database("tb_users")
     }
+    
+    async seacher_Mail_DB(email: string){
+
+        return await Knex_Database('tb_users')
+        .where("email", email);
+    }
 }
 
+
+export default new UserData;

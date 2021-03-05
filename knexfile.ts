@@ -2,7 +2,7 @@
 require("dotenv").config();
 
 
-module.exports = {
+export default {
 
   development: {
     client: process.env.CLIENT,
