@@ -93,24 +93,9 @@ export default {
 
         try {
             
-            const token = Request.header("Token");
-            const decode = VerificarToken(token);
-            const verificando_Permissao = Verificando_Permissao(decode);
+            const result = await administracao_Service.list_User_Service();
 
-
-            if(verificando_Permissao.err) {
-
-
-                return Response.status(401).json({ err : verificando_Permissao.err});
-            }
-
-
-            //Retornando dos dados
-
-            const result = await user_Data.list_users();
-        
-
-            return Response.status(200).json(result);
+            return Response.status(200).json(result.msg);
 
         } catch (error) {
             

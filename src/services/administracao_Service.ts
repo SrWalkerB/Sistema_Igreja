@@ -1,3 +1,4 @@
+import user_Data from "../Data/user_Data";
 import congregacaoService from "./congregacaoService";
 import userService from "./userService";
 
@@ -33,6 +34,15 @@ class Adminstracao_Service{
         if(user?.err) return { err: user.err };
 
         return { msg: "User Create" }
+    }
+
+    async list_User_Service(){
+        
+        const userList = await user_Data.list_users();
+
+        if(userList.length == 0) return { msg: "Nenhum usuário cadastrado" };
+
+        return { msg: userList };
     }
 }
 
