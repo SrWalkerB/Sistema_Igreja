@@ -21,7 +21,7 @@ class Adminstracao_Service{
 
         const [{ id_congregacao }] = seacher_Congregacao;
         
-       await userService.create_User_Service({
+       const user = await userService.create_User_Service({
             id_congregacao: id_congregacao,
             name: data.name,
             email: data.email,
@@ -29,6 +29,8 @@ class Adminstracao_Service{
             surname: data.surname,
             type: data.type
         }); 
+
+        if(user?.err) return { err: user.err };
 
         return { msg: "User Create" }
     }
