@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import congregacao_Data from "../Data/congregacao_Data";
+import info_Congregacao_Data from "../Data/info_Congregacao_Data";
 
 
 interface ICreate_Info_Congregacao{
@@ -62,7 +63,12 @@ class Congregacao_Service{
 
     async seacher_Congregacao_ID_Service(id: string){
 
-        return await congregacao_Data.seacher_congregacao_ID(id);
+        const data = {
+            congregacao: await congregacao_Data.seacher_congregacao_ID(id),
+            info_Congregacao: await info_Congregacao_Data.seacher_Info_Congregacao_ID(id)
+        }
+
+        return data;
     }
 
     async delete_Congregacao_Service(id_congregacao: string){
