@@ -2,10 +2,10 @@
 require("dotenv").config();
 
 import express from "express";
+import adm_router from "./routes/adm_router";
 import login_router from "./routes/login_router";
-const adm_router = require("./routes/adm_router");
-const user_route = require("./routes/user_router");
-const caixa_route = require("./routes/caixa_router");
+import user_route from "./routes/user_router";
+//const caixa_route = require("./routes/caixa_router");
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(login_router);
 
 app.use(user_route);
 
-app.use(caixa_route);
+//app.use(caixa_route);
 
 
 export default app;

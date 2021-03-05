@@ -10,7 +10,6 @@ interface ICreateAccountData{
 }
 
 
-
 class UserData {
     
     async create_user(data: ICreateAccountData) {

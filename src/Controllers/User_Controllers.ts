@@ -1,36 +1,36 @@
+import { Request, Response } from "express";
 const congregacao_Data = require("../Data/congregacao_Data");
 const membros_Data = require("../Data/membros_Data");
 const { VerificarToken } = require("../utils/gerarTokens");
 
 
-module.exports = {
+export default{
 
-
-    list_congregacao: async (Request, Response) => {
+    list_congregacao: async (Request: Request, Response: Response) => {
 
 
         try {
 
             //Verificando Token
-
+/* 
             const token = Request.header("Token");
             const verficar_token = VerificarToken(token);
 
 
 
-            const seacher_congregacao = await congregacao_Data.list_congregacao_ID(verficar_token.id_congregacao);
+            const seacher_congregacao = await congregacao_Data.list_congregacao_ID(verficar_token.id_congregacao); */
 
 
-            return Response.status(200).json(seacher_congregacao);
+            return Response.status(200).json("seacher_congregacao");
             
         } catch (error) {
             
             console.log(error);
             return Response.status(200).json({ err: error })
         }
-    },
+    }/* ,
 
-    list_membros_congregacao: async (Request, Response) => {
+    list_membros_congregacao: async (Request: Request, Response: Response) => {
 
         try {
             
@@ -56,7 +56,7 @@ module.exports = {
         }
     },
 
-    create_membro_congregacao: async (Request, Response) => {
+    create_membro_congregacao: async (Request: Request, Response: Response) => {
 
 
         try {
@@ -101,7 +101,7 @@ module.exports = {
         }
     },
 
-    update_membro_congregacao: async (Request, Response) => {
+    update_membro_congregacao: async (Request:Request, Response: Response) => {
 
         try {
 
@@ -149,7 +149,7 @@ module.exports = {
 
     },
 
-    update_Info_Congregacao: async (Request, Response) => {
+    update_Info_Congregacao: async (Request: Request, Response: Response) => {
 
         try {
             
@@ -184,7 +184,7 @@ module.exports = {
         }
     },
 
-    delete_membro_congregacao: async (Request, Response) => {
+    delete_membro_congregacao: async (Request: Request, Response: Response) => {
 
         try {
             
@@ -225,5 +225,5 @@ module.exports = {
             console.log(error);
             return Response.status(500).json({ err : error });
         }
-    }
+    } */
 }
