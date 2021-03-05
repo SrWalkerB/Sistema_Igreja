@@ -60,9 +60,14 @@ class Congregacao_Service{
         return await congregacao_Data.seacher_congregacao_NAME(name);
     }
 
+    async seacher_Congregacao_ID_Service(id: string){
+
+        return await congregacao_Data.seacher_congregacao_ID(id);
+    }
+
     async delete_Congregacao_Service(id_congregacao: string){
 
-        const seacher_Congregacao = await congregacao_Data.list_congregacao_ID(id_congregacao);
+        const seacher_Congregacao = await congregacao_Data.seacher_congregacao_ID(id_congregacao);
         
         if(seacher_Congregacao.length == 0) return { err : "Congregação não encontrada" };
 

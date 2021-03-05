@@ -1,14 +1,6 @@
 import { Request, Response } from "express";
 import administracao_Service from "../services/administracao_Service";
 import congregacaoService from "../services/congregacaoService";
-const caixa_Data = require("../Data/caixa_Data");
-const congregacao_Data = require("../Data/congregacao_Data");
-const membros_Data = require("../Data/membros_Data");
-const user_Data = require("../Data/user_Data");
-const { Cryptografar_Password } = require("../utils/crytografar_password");
-const { VerificarToken } = require("../utils/gerarTokens");
-const { Verificando_Permissao } = require("../utils/verificando_Permisao");
-const { Verificar_Email } = require("../utils/verificao_email_DB");
 
 
 export default {
@@ -80,7 +72,7 @@ export default {
 
             if(result.err) return Response.status(404).json({ err : result.err })
                         
-            return Response.status(200).json(result.msg);
+            return Response.status(200).json({ msg: result.msg });
 
         } catch (error) {
             

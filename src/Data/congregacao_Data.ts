@@ -39,7 +39,7 @@ class Congregacao_Data{
         .where("name", name);
     }
 
-    async list_congregacao_ID(id: string){
+    async seacher_congregacao_ID(id: string){
 
         return Knex_Database("tb_congregacoes")
         .where("id_congregacao", id)

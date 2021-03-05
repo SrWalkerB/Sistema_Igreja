@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import userService from "../services/userService";
 const congregacao_Data = require("../Data/congregacao_Data");
 const membros_Data = require("../Data/membros_Data");
 const { VerificarToken } = require("../utils/gerarTokens");
@@ -8,20 +9,12 @@ export default{
 
     list_congregacao: async (Request: Request, Response: Response) => {
 
-
         try {
 
-            //Verificando Token
-/* 
-            const token = Request.header("Token");
-            const verficar_token = VerificarToken(token);
+            const token = Request.header('token');
+            const seacher_congregacao = await userService.myCongregacao(token!);
 
-
-
-            const seacher_congregacao = await congregacao_Data.list_congregacao_ID(verficar_token.id_congregacao); */
-
-
-            return Response.status(200).json("seacher_congregacao");
+            return Response.status(200).json(seacher_congregacao);
             
         } catch (error) {
             

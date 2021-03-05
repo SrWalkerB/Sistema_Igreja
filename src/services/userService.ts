@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import user_Data from "../Data/user_Data";
 import crytografar_password from "../utils/crytografar_password";
+import gerarTokens from "../utils/gerarTokens";
+import congregacaoService from "./congregacaoService";
 
 interface ICreateAccount{
     id_congregacao: string
@@ -56,6 +58,16 @@ class User_Service {
             surname: data.surname,
             type: data.type
         })
+    }
+
+    async myCongregacao(token: string){
+
+        const decoded = gerarTokens.verificarToken(token);
+        const { id_congregacao } = decoded;
+
+        const seacher_Congregacao = await congregacaoService.seacher_Congregacao_ID_Service(id_congregacao);
+        
+        return seacher_Congregacao;
     }
 }
 
