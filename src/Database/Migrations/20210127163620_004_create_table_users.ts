@@ -1,8 +1,7 @@
-const Knex_Database = require("../Infra/Knex_Config");
+import Knex_Database from "../Infra/Knex_Config";
 
 
-
-exports.up = function(knex) {
+export async function up(): Promise<void> {
  
     return Knex_Database.schema.createTableIfNotExists("tb_users", table => {
 
@@ -18,7 +17,6 @@ exports.up = function(knex) {
     })
 };
 
-exports.down = function(knex) {
-  
+export async function down():Promise<void>{
     return Knex_Database.schema.dropTableIfExists('tb_users');
 };

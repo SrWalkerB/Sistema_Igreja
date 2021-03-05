@@ -20,14 +20,16 @@ class GeneretedToken{
         ,process.env.KEY!, { expiresIn: "60m" })
     }
     
-    verificarToken(token:string): string | void{
+    verificarToken(token:string): string| any{
     
-        return jwt.verify(token, process.env.KEY!, (err, decoded) => {
-    
-            if(err) return 'Token Invalido'
-    
+        const result = jwt.verify(token, process.env.KEY!, (err, decoded) => {
+        
+            if(err) return "Token Invalido"
+
             return decoded;
-        }); 
+        });
+
+        return result;
     }
 }
 

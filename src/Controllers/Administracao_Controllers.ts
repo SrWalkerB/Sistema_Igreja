@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+import congregacaoService from "../services/congregacaoService";
 const caixa_Data = require("../Data/caixa_Data");
 const congregacao_Data = require("../Data/congregacao_Data");
 const membros_Data = require("../Data/membros_Data");
@@ -8,53 +10,15 @@ const { Verificando_Permissao } = require("../utils/verificando_Permisao");
 const { Verificar_Email } = require("../utils/verificao_email_DB");
 
 
-module.exports = {
+export default {
 
-    list_congregacoes: async (Request, Response) => {
+    list_congregacoes: async (Request: Request, Response: Response) => {
 
         try {
 
-            //Verificando permissoes
-
-            const token = Request.header("Token");
-            const decode = VerificarToken(token);
-            const verificando_Permissao = Verificando_Permissao(decode);
+            const result = await congregacaoService.list_All_Congregacoes_Service();
             
-
-            if(verificando_Permissao.err){
-
-                return Response.status(401).json({ err: verificando_Permissao.err });
-            }
-
-
-            //Pegando dados
-            const congregacoes = await congregacao_Data.list_congregacoes_all_ID();
-            let data = [];
-
-
-
-            for(let x = 0; x < congregacoes.length; x++){
-
-                const data_Congregacoes = await congregacao_Data.list_congregacao_ID(congregacoes[x].id_congregacao)
-                const data_Membros_Congregacoes = await membros_Data.list_membros_Congregacao(congregacoes[x].id_congregacao)
-                const data_Caixa_Congregacoes = await caixa_Data.list_caixa(congregacoes[x].id_congregacao)
-
-                data.push({
-                    "congregacao": data_Congregacoes[0], 
-                    "membros": data_Membros_Congregacoes,
-                    "caixa": data_Caixa_Congregacoes
-                })
-                
-            } 
-            
-
-            if(congregacoes <= 0){
-
-                return Response.status(200).json({ msg: "Nenhuma Congregação cadastrada" })
-            }
-
-
-            return Response.status(200).json(data)
+            return Response.status(200).json(result.msg);
 
         } catch (error) {
             
@@ -63,45 +27,34 @@ module.exports = {
         }
     },
 
-    create_congregacoes: async (Request, Response) => {
+    create_congregacoes: async (Request: Request, Response: Response) => {
 
         try {
 
-             //Verificando Permissoes
-
-             const token = Request.header("Token");
-             const decode = VerificarToken(token);
-             const verificando_Permissao = Verificando_Permissao(decode);
-
-
-            //Pegando os dados
-
-            const { name } = Request.body;
-        
-
-            //Verificando se já existe cadastro
+            const { 
+                    name,
+                    cep,
+                    rua,
+                    numero,
+                    bairro,
+                    cidade,
+                    estado,
+            } = Request.body;
             
-            const seacher = await congregacao_Data.list_congregacao_NAME(name);
+            const create = await congregacaoService.create_Congregacao_Service({
+                name: name,
+                rua: rua,
+                bairro: bairro,
+                cidade: cidade,
+                estado: estado,
+                cep: cep,
+                numero: numero,
+            })
 
-
-            if(seacher != ""){
-
-                return Response.status(201).json({ msg: "Congregação já cadastrada" });
-            }
-
-
-            
-            //Criando as tabelas e as ligações
-
-            const create_congregacao = await congregacao_Data.create_congregacao(name);
-            
-            
-
-            //Finalizando o cadastro
+            if(create?.err) return Response.status(400).json({ err: create.err });
 
             return Response.status(201).json({ msg: "Congregacao Criada" });
-            
-
+        
         } catch (error) {
             
             console.log(error);
@@ -109,7 +62,7 @@ module.exports = {
         }
     },
 
-    create_user: async (Request, Response) => {
+    create_user: async (Request: Request, Response: Response) => {
 
         try {
 
@@ -176,7 +129,7 @@ module.exports = {
         }
     },
 
-    list_user: async (Request, Response) => {
+    list_user: async (Request: Request, Response: Response) => {
 
         try {
             
@@ -206,7 +159,7 @@ module.exports = {
         }
     },
 
-    delete_Congregacao: async (Request, Response) => {
+    delete_Congregacao: async (Request: Request, Response: Response) => {
 
         try {
             

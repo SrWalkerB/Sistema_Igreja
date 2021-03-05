@@ -6,7 +6,7 @@ import User_Controllers from "../Controllers/User_Controllers";
 const user_route = Router();
 
 
-user_route.get("/congregacao", autorizacao_middlware.Autorizacao, User_Controllers.list_congregacao);
+//user_route.get("/congregacao", autorizacao_middlware.Autorizacao, User_Controllers.list_congregacao);
 
 /* user_route.get("/congregacao/membros/", autorizacao_middlware.Autorizacao, User_Controllers.list_membros_congregacao);
 

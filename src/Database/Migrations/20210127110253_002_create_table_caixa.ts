@@ -1,12 +1,12 @@
-const Knex_Database = require("../Infra/Knex_Config");
+import Knex_Database from "../Infra/Knex_Config";
 
 
-exports.up = function(knex) {
+export async function up(): Promise<void> {
     
     return Knex_Database.schema.createTableIfNotExists("tb_caixa", table => {
 
-        table.integer("id_congregacao").notNullable();
-        table.increments("id_lancamento").notNullable();
+        table.string("id_congregacao").notNullable();
+        table.string("id_lancamento").notNullable();
 
         table.decimal("dizimos");
         table.decimal("doacoes");
@@ -16,7 +16,6 @@ exports.up = function(knex) {
     })
 };
 
-exports.down = function(knex) {
-  
+export async function down(): Promise<void>  {
     return Knex_Database.schema.dropTableIfExists("tb_caixa");
 };
