@@ -1,9 +1,7 @@
 import { Request, Response } from "express";
+import congregacaoService from "../services/congregacaoService";
 import membros_Service from "../services/membros_Service";
 import userService from "../services/userService";
-const congregacao_Data = require("../Data/congregacao_Data");
-const membros_Data = require("../Data/membros_Data");
-const { VerificarToken } = require("../utils/gerarTokens");
 
 
 export default{
@@ -32,52 +30,29 @@ export default{
 
             const seacher_membros = await membros_Service.list_Membros_Service(token!);
 
-            return Response.status(200).json(seacher_membros);
+            return Response.status(200).json(seacher_membros.msg);
 
         } catch (error) {
             
             console.log(error);
             return Response.status(500).json({ err: error });
         }
-    } /*,
+    },
 
     create_membro_congregacao: async (Request: Request, Response: Response) => {
-
-
         try {
 
-            //Verificando Token 
-
             const token = Request.header("Token");
-            const verficar_token = VerificarToken(token);
-
-
-            if(verficar_token.err){
-
-                return Response.status(401).json({ err: verficar_token.err })
-
-            }
-            
-            //Pegando os dados
             const { name, surname, age, cargo } = Request.body;
 
+            const create_membro = await membros_Service.create_Membros_Service({
+                name: name,
+                surname: surname,
+                age: age,
+                cargo: cargo
+            }, token!)
 
-            //Criando membro no DB
-
-            const create_membro = await membros_Data.create_membros_Congregacao(verficar_token.id_congregacao, name, surname, age, cargo);
-            
-
-            //Verificando erros
-
-            if(create_membro.err){
-
-                return Response.status(500).json(create_membro.err);
-            }
-
-
-            // Retornando Status
-
-            return Response.status(500).json({ msg: "Membro cadastrado!" });
+            return Response.status(201).json({ msg: create_membro.msg });
 
         } catch (error) {
             
@@ -91,39 +66,20 @@ export default{
         try {
 
             const token = Request.header("Token");
-            const verifica_Token = VerificarToken(token);
-            const user_ID_Congregacao = verifica_Token.id_congregacao;
 
-
-            if(verifica_Token.err){
-
-                return Response.status(401).json({ err: "Token Inválido" })
-            } 
-            
-
-            const { id_membro } = Request.params;
+            const { id } = Request.params;
             const { name, surname, age, cargo } = Request.body;
 
-
-            const seacher_membro = await membros_Data.list_membros_ID(user_ID_Congregacao, id_membro)
-
-
-            if(seacher_membro == ""){
-                
-                return Response.status(200).json({ err: "Membro não encontrada" });
-            }
-
+            const result = await membros_Service.update_Membro_Service({
+                id_user: id,
+                name: name,
+                surname: surname,
+                age: age,
+                cargo: cargo
+            }, token!);
             
-            const membro_ID = seacher_membro[0].id_membros;
-            const update = await membros_Data.update_Membro_Congregacao(user_ID_Congregacao, membro_ID, name, surname, age, cargo);
+            if(result?.err) return Response.status(404).json({ err: result.err })
 
-
-            if(update <= 0){
-
-                return Response.status(200).json({ err: "Ocorreu um erro, tente mais tarde" });
-            } 
-
-            
             return Response.status(200).json({ msg: "Membro Atualizado!" });
 
         } catch (error) {
@@ -138,29 +94,20 @@ export default{
 
         try {
             
-            //Verificando Token
-
             const token = Request.header("Token");
-            const verifica_Token = VerificarToken(token);
-
-
-            //Pegando as informações
-
-            const id_congregacao = verifica_Token.id_congregacao;
-
             const { cep, rua, numero, bairro, cidade, estado, pais } = Request.body;
 
+            const update = await congregacaoService.update_Info_Congregacao_Service({
+                rua: rua,
+                bairro: bairro,
+                cep: cep,
+                cidade: cidade,
+                estado: estado,
+                numero: numero,
+                pais: pais
+            }, token!);
 
-            //Update
-
-            const update = await congregacao_Data.update_Info_Congregacao(id_congregacao, cep, rua, numero, bairro, cidade, estado, pais);
-
-            if(update < -1) {
-
-                return Response.status(500).json({ err: "Ocorreu um erro, tente mas tarde" })
-            }
-
-            return Response.status(200).json({ msg: "Alterado!" })
+            return Response.status(200).json({ msg: update.msg });
 
         } catch (error) {
             
@@ -168,6 +115,7 @@ export default{
             return Response.status(500).json({ err: error });
         }
     },
+    /*
 
     delete_membro_congregacao: async (Request: Request, Response: Response) => {
 

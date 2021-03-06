@@ -67,20 +67,6 @@ class Congregacao_Data{
         });
     }
 
-    async update_Info_Congregacao (id_congregacao, cep, rua, numero, bairro, cidade, estado, pais){
-
-        return Knex_Database("tb_info_congregacoes")
-        .where("id_congregacao", id_congregacao)
-        .update({
-            cep: cep,
-            rua: rua,
-            numero: numero,
-            bairro: bairro,
-            cidade: cidade,
-            estado: estado,
-            pais: pais
-        })
-    }
 
     async delete_Congregacao (id_congregacao: string){
 

@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import congregacao_Data from "../Data/congregacao_Data";
 import info_Congregacao_Data from "../Data/info_Congregacao_Data";
+import gerarTokens from "../utils/gerarTokens";
 
 
 interface ICreate_Info_Congregacao{
@@ -11,6 +12,16 @@ interface ICreate_Info_Congregacao{
     bairro: string,
     cidade: string,
     estado: string,
+}
+
+interface IUpdate_Info_Congregacao{
+    cep?: number,
+    rua?: string,
+    numero?: string,
+    bairro?: string,
+    cidade?: string,
+    estado?: string,
+    pais?: string
 }
 
 class Congregacao_Service{
@@ -69,6 +80,24 @@ class Congregacao_Service{
         }
 
         return data;
+    }
+
+    async update_Info_Congregacao_Service(data: IUpdate_Info_Congregacao, token: string){
+
+        const { id_congregacao } = gerarTokens.verificarToken(token);
+
+        await info_Congregacao_Data.update_Info_Congregacao({
+            id_congregacao: id_congregacao,
+            cep: data.cep!,
+            rua: data.rua!,
+            numero: data.numero!,
+            bairro: data.bairro!,
+            cidade: data.cidade!,
+            estado: data.estado!,
+            pais: data.pais!,
+        }) 
+
+        return { msg: "Congregação atualizada" };
     }
 
     async delete_Congregacao_Service(id_congregacao: string){

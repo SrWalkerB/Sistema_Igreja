@@ -1,4 +1,3 @@
-
 const express = require('express');
 const Caixa_Controllers = require('../Controllers/Caixa_Controllers');
 const Autorizacao = require('./middlewares/autorizacao_middlware');
