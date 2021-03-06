@@ -2,27 +2,28 @@
 
 # Conteudos
 
-   * [Sobre](#Sobre)
-   * [Features](#Features)
-   * [Geatting Started](#Geatting-Started)
-   * [Instalação](#instalacao)
-   * [Como usar](#como-usar)
-   * [Tecnologias](#tecnologias)
+* [Sobre](#Sobre)
+* [Features](#Features)
+* [Geatting Started](#Geatting-Started)
+* [Instalação](#instalacao)
+* [Como usar](#como-usar)
+* [Tecnologias](#tecnologias)
 
-### A ideia é criar uma REST API para gerenciamento de igrejas e sua repectivas congregações
+### A ideia é criar uma simples REST API para gerenciamento de igrejas e sua repectivas congregações
 
 ## Features
-- [x] Cadastro de usuário ADMIN
-- [x] Cadastro das congregações
-- [x] Cadastro de usuários filhos
-- [x] Mini Gerenciamento de Caixa
-- [x] Usuários filhos gerenciam suas próprias congregações criadas do usuário ADMIN
-- [x] Autenticação e autorização 
+
+- [X] Cadastro de usuário ADMIN
+- [X] Cadastro das congregações
+- [X] Cadastro de usuários filhos
+- [X] Mini Gerenciamento de Caixa
+- [X] Usuários filhos gerenciam suas próprias congregações criadas do usuário ADMIN
+- [X] Autenticação e autorização
 
 # Getting started
-### Breve tutorial de como rodar o projeto
 
-## Instalando as dependecias 
+## Instalando as dependecias
+
 ```
 npm install
 ```
@@ -33,17 +34,24 @@ npm install
 .env
 ```
 
-## Rodando o projeto 
+## Rodando o projeto
 
 ```
 npm run dev
 ```
 
-
 ## Como Usar
 
-#### Primeiro crie uma conta ADMIN, a partir dela, usando programas como postman para realizar as requisições pegue o token que é dado quando realiza um login e use nas rotas de ADMIN. Usuário ADMIN pode criar as congregações e usuarios com baixo privilégio para gerenciar as congregacoes, o usuario que foi destinado a congregacao tem poder para: criar membros, gerenciar o caixa e as informações da congregação que foi cadastrado, a congregação é indetificada a partir do toker do usuário, não esqueça de colocar toda vez que fizer alguma requisição. Token inspira a cada 30 minutos.
+#### Primeiro entre na pasta de rotas de login e crie suas respectivas rotas. Em Seguida crie uma conta, a partir dela e do token adm é possível ter acesso as próximas rotas.
+
+### Usuário ADM
+
+#### Agora com ADM criado é possível criar suas respectivas congregações, entre nas rotas de ADM para criar suas rotas. Com ela crie primeiro a congregação e seguida crie um usuário para ela.
+
+### User comum
+
+#### Depois de criado um usuário com a rota ADM, realize login com user comum. Ele é o gerente da congregação atribuida, com ele é possível criar membros, gerenciar caixa e editar as informação da sua congregação responsável.
 
 ## Tecnologias
 
-### Utilizei Node com MySql
+### Utilizei Node com PostgreSql
