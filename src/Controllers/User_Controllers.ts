@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import membros_Service from "../services/membros_Service";
 import userService from "../services/userService";
 const congregacao_Data = require("../Data/congregacao_Data");
 const membros_Data = require("../Data/membros_Data");
@@ -21,24 +22,15 @@ export default{
             console.log(error);
             return Response.status(200).json({ err: error })
         }
-    }/* ,
+    },
 
     list_membros_congregacao: async (Request: Request, Response: Response) => {
 
         try {
             
             const token = Request.header("Token");
-            const verficar_token = VerificarToken(token);
 
-
-
-            const seacher_membros = await membros_Data.list_membros_Congregacao(verficar_token.id_congregacao);
-
-            if(seacher_membros == ""){
-             
-                return Response.status(200).json({ msg: "Nenhum membro cadastrado" });
-            }
-
+            const seacher_membros = await membros_Service.list_Membros_Service(token!);
 
             return Response.status(200).json(seacher_membros);
 
@@ -47,7 +39,7 @@ export default{
             console.log(error);
             return Response.status(500).json({ err: error });
         }
-    },
+    } /*,
 
     create_membro_congregacao: async (Request: Request, Response: Response) => {
 

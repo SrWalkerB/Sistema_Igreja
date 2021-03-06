@@ -8,8 +8,8 @@ const user_route = Router();
 
 user_route.get("/congregacao/my", autorizacao_middlware.Autorizacao, User_Controllers.list_congregacao);
 
-/* user_route.get("/congregacao/membros/", autorizacao_middlware.Autorizacao, User_Controllers.list_membros_congregacao);
-
+user_route.get("/congregacao/membros/", autorizacao_middlware.Autorizacao, User_Controllers.list_membros_congregacao);
+/* 
 user_route.post("/congregacao/membros/", autorizacao_middlware.Autorizacao, User_Controllers.create_membro_congregacao);
 
 user_route.put("/congregacao/membros/:id_membro", autorizacao_middlware.Autorizacao, User_Controllers.update_membro_congregacao);
