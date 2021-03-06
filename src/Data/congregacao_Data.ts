@@ -67,7 +67,6 @@ class Congregacao_Data{
         });
     }
 
-
     async delete_Congregacao (id_congregacao: string){
 
         await Knex_Database('tb_congregacoes')

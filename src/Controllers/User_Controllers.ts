@@ -93,7 +93,7 @@ export default{
     update_Info_Congregacao: async (Request: Request, Response: Response) => {
 
         try {
-            
+
             const token = Request.header("Token");
             const { cep, rua, numero, bairro, cidade, estado, pais } = Request.body;
 
@@ -114,49 +114,5 @@ export default{
             console.log(error);
             return Response.status(500).json({ err: error });
         }
-    },
-    /*
-
-    delete_membro_congregacao: async (Request: Request, Response: Response) => {
-
-        try {
-            
-            //Verificando Token 
-
-            const token = Request.header("Token");
-            const verficar_token = VerificarToken(token);
-
-
-            if(verficar_token.err){
-
-                return Response.status(401).json({ err: verficar_token.err })
-
-            }
-
-            //Pegando ID
-
-            const { id } = Request.params;
-
-            //Deletando no DB
-
-            const delete_membro = await membros_Data.delete_membro_congregacao(verficar_token.id_congregacao, id);
-
-
-            //Fazendo uma verificao
-
-            if(delete_membro <= 0){
-
-                return Response.status(401).json({ err : "ID membro não encontrado" });
-            }
-
-            //Retornando Status
-
-            return Response.status(401).json({ msg : "Membro deletado!" })
-
-        } catch (error) {
-            
-            console.log(error);
-            return Response.status(500).json({ err : error });
-        }
-    } */
+    }
 }
